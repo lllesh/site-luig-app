@@ -1,0 +1,297 @@
+@font-face {
+  font-family: 'Jeffesta';
+  src: url('fonts/jeffesta-regular-webfont.woff2') format('woff2'),
+       url('fonts/jeffesta-regular-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --fundo: #FFFBF3;
+  --tinta: #8a847e;      /* cinza no lugar do preto */
+  --suave: #a8a29b;
+  --linha: rgba(27, 26, 25, .14);
+  --papel: #fffefc;
+  --rosa: #F48591;
+
+  /* a cartinha oficial — mesma peça do luigi.cards */
+  --card-w: min(100vw - 36px, 177.778dvh - 195.556px);
+  --card-ratio: 400 / 770;
+  --desk-pad: 40px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --card-ratio: 1.85;
+    --card-w: min(100vw - 2 * var(--desk-pad), (100svh - 2 * var(--desk-pad)) * var(--card-ratio));
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
+
+html, body {
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--fundo);
+}
+
+body {
+  font-family: 'Jeffesta', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--tinta);
+  font-weight: 400;
+}
+
+/* a cartinha: centralizada na tela creme, mesmo formato do luigi.cards */
+html, body { display: flex; align-items: center; justify-content: center; }
+
+.cover-card {
+  width: var(--card-w);
+  aspect-ratio: var(--card-ratio);
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.6rem;
+  background: #7292ff;
+  box-shadow: 0 22px 55px -26px rgba(0, 0, 0, .3), 0 -12px 36px -22px rgba(0, 0, 0, .13);
+}
+
+.luigi-avatar-bubble {
+  position: relative;
+  z-index: 1;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .45);
+  border: 11px solid var(--fundo);
+  flex-shrink: 0;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.luigi-avatar-bubble.arrastando {
+  cursor: grabbing;
+}
+
+.cover-life {
+  position: relative;
+  z-index: 1;
+  font-family: 'Jeffesta', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.15rem, 4.6vw, 1.55rem);
+  color: var(--fundo);
+  line-height: 1;
+  letter-spacing: .26em;
+  text-transform: lowercase;
+}
+
+/* o palco das bolinhas mora dentro da cartinha, não na tela inteira */
+#palco {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+}
+#palco.pegando { cursor: grabbing; }
+
+/* ---------- a carta: grande, no meio da tela, formato de carta ---------- */
+.carta {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 660px, 60dvh);
+  aspect-ratio: 17 / 24;
+  background: var(--papel);
+  border: 1px solid var(--linha);
+  border-radius: 34px;
+  padding: clamp(24px, 4.5vw, 46px);
+  box-shadow: 0 34px 80px -22px rgba(27, 26, 25, .34), 0 3px 10px rgba(27, 26, 25, .07);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: entra .48s cubic-bezier(.2, .9, .2, 1) both;
+}
+@keyframes entra {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(.9) rotate(-1.5deg); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+
+.ico {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  /* o × usa a fonte do sistema */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--suave);
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background .2s ease, color .2s ease, transform .25s ease;
+}
+.ico:hover { background: rgba(27, 26, 25, .06); color: var(--tinta); transform: rotate(90deg); }
+
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 2.6vh, 22px);
+}
+
+/* uma linha só */
+#campo {
+  width: 100%;
+  border: 2px solid var(--linha);
+  border-radius: 999px;
+  background: #fff;
+  padding: clamp(16px, 3.2vh, 26px) 26px;
+  font-family: inherit;
+  font-size: clamp(22px, 6.4vw, 34px);
+  letter-spacing: .09em;
+  text-align: center;
+  color: var(--tinta);
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+#campo::placeholder { color: #c9c2ba; letter-spacing: .09em; }
+#campo:focus { border-color: var(--rosa); box-shadow: 0 0 0 6px rgba(244, 133, 145, .18); }
+
+.linha {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: inherit;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), background .2s ease, color .2s ease, border-color .2s ease;
+}
+.btn:active { transform: scale(.96); }
+
+.primario {
+  background: var(--rosa);
+  color: #fff;
+  font-size: clamp(28px, 8vw, 40px);
+  font-weight: 400;
+  letter-spacing: .16em;
+  padding: clamp(14px, 3vh, 24px) 26px;
+  width: 100%;
+}
+.primario:hover { background: #ef7181; }
+
+.fantasma {
+  background: transparent;
+  color: var(--suave);
+  border-color: var(--linha);
+  font-size: clamp(17px, 4.4vw, 21px);
+  letter-spacing: .12em;
+  padding: 10px 20px;
+}
+.fantasma:hover { color: var(--tinta); border-color: rgba(27, 26, 25, .34); }
+
+/* ---------- prompt de instalar como PWA, passo a passo ---------- */
+.carta-instalar {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: var(--card-w);
+  aspect-ratio: var(--card-ratio);
+  border-radius: 50px;
+  background: #8D96C1;
+  color: #fff;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 0 34px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  box-shadow: 0 36px 80px -22px rgba(27, 26, 25, .5);
+  animation: cartaInstalarPop .34s cubic-bezier(.34, 1.4, .64, 1) both;
+}
+.instalar-titulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.instalar-passos {
+  list-style: none;
+  counter-reset: passo;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+  width: 100%;
+}
+.instalar-passos li {
+  counter-increment: passo;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .92rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.instalar-passos li::before {
+  content: counter(passo);
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .28);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: .82rem;
+}
+.instalar-ok {
+  font-family: inherit;
+  border: 2px solid rgba(255, 255, 255, .6);
+  background: transparent;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 30px;
+  font-size: .92rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+.instalar-ok:hover { background: rgba(255, 255, 255, .14); }
+@keyframes cartaInstalarPop {
+  from { opacity: 0; transform: scale(.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
+}

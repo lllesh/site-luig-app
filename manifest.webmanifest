@@ -1,0 +1,16 @@
+{
+  "name": "L U I G I",
+  "short_name": "L U I G I",
+  "description": "o app do Luigi — bolinhas com os sites dele, cada uma flutuando na cartinha.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFFBF3",
+  "theme_color": "#FFFBF3",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

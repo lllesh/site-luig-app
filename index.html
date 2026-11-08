@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Luigi App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFBF3">
+<meta property="og:type" content="website">
+<meta property="og:title" content="L U I G I">
+<meta property="og:image" content="https://luig.app/lello-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="1200">
+<meta property="og:url" content="https://luig.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="L U I G I">
+<meta name="twitter:image" content="https://luig.app/lello-og.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="L U I G I">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=excon@700,800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- a cartinha oficial do Luigi App: mesma peça do luigi.cards, com as bolinhas se mexendo dentro -->
+  <div id="cartinha" class="cover-card">
+    <canvas id="palco"></canvas>
+    <img class="luigi-avatar-bubble" src="icons/luigi-avatar.png" alt="Luigi" draggable="false">
+  </div>
+
+  <!-- a carta do link -->
+  <div id="painel" class="carta" role="dialog" aria-modal="true" aria-label="link do site" hidden>
+    <button id="fechar" class="ico" type="button" aria-label="fechar">×</button>
+
+    <form id="form" autocomplete="off">
+      <input id="campo" type="text" inputmode="url" spellcheck="false" placeholder="https://…" aria-label="link do site">
+      <button id="ok" class="btn primario" type="submit">OK</button>
+      <div class="linha">
+        <a id="abrir" class="btn fantasma" href="#" target="_blank" rel="noopener" hidden>ABRIR SITE</a>
+        <button id="limpar" class="btn fantasma" type="button" hidden>LIMPAR</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- cartinha: manda instalar como PWA, com o passo a passo certo pro aparelho -->
+  <div id="instalarCarta" class="carta-instalar" role="dialog" aria-label="instalar o luigi app" hidden>
+    <p class="instalar-titulo">instala o Luigi no seu celular</p>
+    <ol id="instalarPassos" class="instalar-passos"></ol>
+    <button type="button" id="instalarOk" class="instalar-ok">entendi</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
